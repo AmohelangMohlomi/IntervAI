@@ -1,0 +1,54 @@
+body {
+    background-color: cornflowerblue;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+h1 {
+    margin-top: 20px;
+    color: white;
+}
+
+p {
+    margin: 20px 0;
+    color: white;
+    font-size: 1.2em;
+}
+
+/* Adjust the image */
+.main-image {
+    width: 250px;        /* Adjust size as needed */
+    max-width: 90%;      /* Responsive on smaller screens */
+    height: auto;
+    border-radius: 10px; /* Optional: rounded corners */
+}
+
+/* List styling */
+ul {
+    list-style-type: none;
+    margin: 20px 0 0 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center; /* Center list items */
+    gap: 20px;               /* Space between items */
+}
+
+ul li {
+    padding: 10px 20px;
+    font-size: 120%;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
+}
+
+ul li:hover {
+    color: black;
+    background-color: #123869;
+}
