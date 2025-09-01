@@ -1,5 +1,6 @@
 body {
     background-color: cornflowerblue;
+    background-image: url("img/background.jpg");
     margin: 0;
     font-family: Arial, sans-serif;
 }
@@ -22,10 +23,10 @@ p {
 
 /* Adjust the image */
 .main-image {
-    width: 400px;        /* Adjust size as needed */
-    max-width: 70%;      /* Responsive on smaller screens */
+    width: 400px;       
+    max-width: 70%;      
     height: auto;
-    border-radius: 10px; /* Optional: rounded corners */
+    border-radius: 10px;
 }
 
 /* List styling */
@@ -35,8 +36,8 @@ ul {
     padding: 0;
     overflow: hidden;
     display: flex;
-    justify-content: center; /* Center list items */
-    gap: 20px;               /* Space between items */
+    justify-content: center; 
+    gap: 20px;               
 }
 
 ul li {
