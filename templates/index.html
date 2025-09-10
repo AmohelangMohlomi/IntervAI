@@ -2,13 +2,14 @@
 <html>
 <head>
     <title>Interview App</title>
-    <link rel="stylesheet" href="css/styles-1.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles-1.css') }}">
 </head>
 <body>
     <div class="container">
 
         <h1>SOFTWARE ENGINEER INTERVIEW APP</h1>
-        <img src="img/background.jpg" alt="Interview" class="main-image" />
+      
+        <img src="{{ url_for('static', filename='img/background.jpg') }}" alt="Interview" class="main-image" />
 
         <p>Which interview would you like to do?</p>
         <ul>

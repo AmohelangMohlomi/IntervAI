@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup - Interview App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login to Interview App</h2>
+        <form action="/login">
+            <label for="username">Username or Email</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required minlength="8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]$">
+
+            <label for="password">Confirm Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password again" required minlength="8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]$">
+
+            <button type="submit">Signup</button>
+        </form>
+        <p class="signup-link">Already have an account? <a href="/login">Login here</a></p>
+    </div>
+</body>
+</html>
