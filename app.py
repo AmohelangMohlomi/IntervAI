@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash,g
 import sqlite3
+import random
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' 
@@ -100,8 +101,22 @@ def add_user(username, password):
         return False
 
 
+def get_random_question(category):
+    conn = sqlite3.connect('questions.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT question FROM questions WHERE category = ?", (category,))
+    questions = cursor.fetchall()
+    conn.close()
 
+    if questions:
+        return random.choice(questions)[0]
+    else:
+        return "No questions available in this category."
 
+@app.route('/technical')
+def technical():
+    question = get_random_question("technical")
+    return render_template("technical.html", question=question)
 
 if __name__ == '__main__':
     init_db()
