@@ -1,17 +1,20 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash,g
+import sqlite3
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Needed for flash messages
+app.secret_key = 'your_secret_key' 
 
-# Login page route (starting page)
+DATABASE = 'users.db' 
+
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
 
-        # Dummy authentication, replace with your logic
-        if username == 'user' and password == 'pass':
+        user = get_user(username)
+        if user and user['password'] == password:  
             flash('Logged in successfully!', 'success')
             return redirect(url_for('home'))
         else:
@@ -19,16 +22,87 @@ def login():
 
     return render_template('login.html')
 
-
 @app.route('/home')
 def home():
     return render_template('index.html')
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    render_template("signup.html")
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+
+        # Basic validation
+        if password != confirm_password:
+            flash('Passwords do not match.', 'error')
+            return render_template('signup.html')
+
+        if len(password) < 8:
+            flash('Password must be at least 8 characters.', 'error')
+            return render_template('signup.html')
+
+        # Try to add user to DB
+        success = add_user(username, password)  # You might want to hash the password here!
+
+        if success:
+            flash('Account created successfully! Please login.', 'success')
+            return redirect(url_for('login'))
+        else:
+            flash('Username already exists. Please choose a different one.', 'error')
+
+    return render_template('signup.html')
+
+
+# Connect to the database
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+        db.row_factory = sqlite3.Row
+    return db
+
+# Close DB when app context ends
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
+
+# Initialize DB and create user table
+def init_db():
+    with app.app_context():
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL
+            )
+        ''')
+        db.commit()
+
+# User lookup function
+def get_user(username):
+    db = get_db()
+    cursor = db.execute('SELECT * FROM users WHERE username = ?', (username,))
+    return cursor.fetchone()
+
+# Add a new user (for testing or signup)
+def add_user(username, password):
+    try:
+        db = get_db()
+        db.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
+        db.commit()
+        return True
+    except sqlite3.IntegrityError:
+        return False
+
+
 
 
 
 if __name__ == '__main__':
+    init_db()
     app.run(debug=True)

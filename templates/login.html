@@ -7,16 +7,27 @@
 <body>
     <div class="login-container">
         <h2>Login to Interview App</h2>
-        <form action="/login">
+        <form method="POST" action="/">
+
             <label for="username">Username or Email</label>
             <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
 
             <label for="password">Password </label>
-            <p>Your password must be at least 8 characters and must include numbers and uppercase letters</p>
+            <!-- <p>Your password must be at least 8 characters and must include numbers and uppercase letters</p> -->
             <input type="password" id="password" name="password" placeholder="Enter your password" required minlength="8" >
 
             <button type="submit">Login</button>
         </form>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+            {% for category, message in messages %}
+                <p class="{{ category }}">{{ message }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
         <p class="signup-link">Don't have an account? <a href="/signup">Sign up here</a></p>
     </div>
 </body>

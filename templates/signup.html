@@ -6,16 +6,16 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>Login to Interview App</h2>
-        <form action="/login">
+        <h2>Signup for Interview App</h2>
+        <form method="POST" action="/signup">
             <label for="username">Username or Email</label>
             <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required minlength="8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]$">
+            <input type="password" id="password" name="password" placeholder="Enter your password" required minlength="8">
 
-            <label for="password">Confirm Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password again" required minlength="8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]$">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Enter your password again" required minlength="8">
 
             <button type="submit">Signup</button>
         </form>
