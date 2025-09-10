@@ -1,1 +1,1 @@
-# interview_app
+# IntervAI
