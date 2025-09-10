@@ -34,7 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
             bgImage.style.opacity = "1";
 
             setTimeout(() => {
+                // Add class to body to switch background from image to neon black-blue gradient
+                document.body.classList.add("question-active");
+
+                // Hide the intro container
                 aiIntro.style.display = "none";
+
+                // Show main content container
                 mainContent.classList.remove("hidden");
                 mainContent.classList.add("fade-in");
             }, 1000);

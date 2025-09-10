@@ -1,27 +1,91 @@
-body {
-    background-color: cornflowerblue;
+/* === Global styles and intro background with image + blur overlay === */
 
+body, html {
     margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    color: white;
+    position: relative;
 }
+/* Dark, almost black overlay with heavy blur */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9); /* almost full black */
+    backdrop-filter: blur(30px);    /* heavy blur */
+    -webkit-backdrop-filter: blur(30px); /* Safari */
+    z-index: -1;
+}
+
+/* === Question page active styles (switch background to neon black-blue gradient) === */
+
+body.question-active {
+    background: linear-gradient(135deg, #000000 0%, #001122 50%, #004080 80%, #001122 100%);
+}
+
+body.question-active::before {
+    content: none; /* remove overlay blur */
+}
+
+/* === Container styling === */
 
 .container {
     text-align: center;
-    padding: 40px 20px;
+    padding: 60px 20px;
+    max-width: 600px;
+    background: rgba(0, 20, 40, 0.85); /* keep your dark translucent bg */
+    border-radius: 15px;
+    box-shadow: 0 0 25px #00aaffcc;   /* neon glow */
+    color: white;
+    /* animation: fadeIn 1s ease-in-out; */
+    margin: 40px auto; /* Fallback layout before intro ends */
 }
+
+/* Center container only after intro is done */
+body.question-active .container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    background: rgba(0, 20, 40, 0.85);
+    box-shadow: 0 0 25px #00aaffcc;
+    color: white;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+/* === Headings === */
 
 h1 {
     margin-top: 20px;
-    color: white;
+    font-size: 3rem;
+    color: #0099bb; /* softer cyan */
+    text-shadow: 0 0 6px #0099bb, 0 0 14px #0099bb;
 }
+
+/* === Paragraphs === */
 
 p {
     margin: 20px 0;
-    color: white;
-    font-size: 1.2em;
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #00aacc;
+    text-shadow: 0 0 6px #00aacc;
 }
 
-/* Adjust the image */
+/* === Styled question class === */
+
+.question {
+    margin-bottom: 30px;
+}
+
+/* === Adjust the main image if used elsewhere === */
+
 .main-image {
     width: 400px;       
     max-width: 70%;      
@@ -29,43 +93,58 @@ p {
     border-radius: 10px;
 }
 
-/* List styling */
+/* === Interview options list === */
+
 ul {
     list-style-type: none;
-    margin: 20px 0 0 0;
+    margin: 0;
     padding: 0;
-    overflow: hidden;
     display: flex;
     justify-content: center; 
-    gap: 20px;               
+    gap: 30px;
 }
 
 ul li {
-    padding: 10px 20px;
-    font-size: 120%;
+    background-color: #005a88; /* darker blue */
+    padding: 14px 28px;
+    border-radius: 8px;
     color: white;
+    font-size: 1.3em;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    border-radius: 5px;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 10px #006f9a88;
+    border: 1.5px solid #007fbbaa;
+    user-select: none;
 }
 
 ul li:hover {
-    color: white;
-    background-color: #123869;
+    background-color: #00bbff; /* brighter cyan on hover */
+    color: #001f27;
+    box-shadow: 0 0 30px #00bbffcc;
+    transform: scale(1.1);
+    border-color: #00bbffcc;
 }
-/* AI Intro Container */
+
+/* === AI Intro Container === */
+
 .ai-intro {
-    position: relative;
-    height: 100vh;
+    position: fixed; /* Changed from relative to fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: #000814; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    color: #00ffff;
+    color: #00aacc;
     font-family: 'Courier New', Courier, monospace;
+    z-index: 10; /* Ensure it's on top of everything else */
 }
+
+
 #bg-image {
     position: absolute;
     top: 0;
@@ -73,19 +152,22 @@ ul li:hover {
     width: 100%;
     height: 100%;
     background: url('/static/img/hands.jpg') center center/cover no-repeat;
-    filter: blur(20px) brightness(0.5);
+    filter: blur(20px) brightness(0.45);
     opacity: 0.3;
     transition: filter 0.3s ease, opacity 0.3s ease;
     z-index: 0;
 }
 
-/* Text above background */
+/* === Text above background === */
+
 .intro-text {
     position: relative;
     z-index: 2;
     font-size: 1.5rem;
     white-space: nowrap;
     margin-bottom: 20px;
+    color: #00aacc;
+    text-shadow: 0 0 8px #00aacc;
 }
 
 .intro-text::after {
@@ -93,94 +175,43 @@ ul li:hover {
     animation: blink 1s step-end infinite;
 }
 
-/* Loading bar container */
+/* === Loading bar container === */
+
 .loading-bar {
     position: relative;
     z-index: 2;
     width: 60%;
     height: 10px;
-    background-color: #082a3e;
+    background-color: #083040;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 10px #00ffff55;
+    box-shadow: 0 0 8px #00aacc55;
 }
 
 .loading-fill {
     width: 0%;
     height: 100%;
-    background: linear-gradient(to right, #00ffff, #0077ff);
-    box-shadow: 0 0 15px #00ffff;
+    background: linear-gradient(to right, #00aacc, #004f66);
+    box-shadow: 0 0 12px #00aacc;
     transition: width 0.3s ease;
 }
 
-/* Blink animation */
+/* === Blink animation === */
+
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
 }
 
-/* Main content */
-.container {
-    text-align: center;
-    padding: 60px 20px;
-    animation: fadeIn 1s ease-in-out;
-    color: white;
-}
-
-.hidden {
-    display: none;
-}
-
-.fade-in {
-    animation: fadeIn 1s ease-in forwards;
-}
+/* === Fade-in animation === */
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Welcome message */
-.welcome-message {
-    font-size: 1.2em;
-    margin-bottom: 40px;
-    color: #a5f3ff;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.5;
-}
+/* === Hidden class for JS toggling === */
 
-/* Question */
-.question {
-    font-size: 1.4em;
-    font-weight: bold;
-    color: #00ffff;
-    margin-bottom: 20px;
-}
-
-/* Interview Options */
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-}
-
-ul li {
-    background-color: #0077ff;
-    padding: 12px 24px;
-    border-radius: 6px;
-    color: white;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    box-shadow: 0 0 10px #00bfff;
-}
-
-ul li:hover {
-    background-color: #005fc1;
-    box-shadow: 0 0 15px #00ffff;
+.hidden {
+    display: none !important;
 }
