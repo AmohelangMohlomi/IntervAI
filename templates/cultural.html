@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Cultural Interview - IntervAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles-1.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cultural.css') }}" />
+</head>
+<body class="question-active">
+
+    <div class="container">
+        <h1>Cultural Interview</h1>
+
+        <p class="question">Question:</p>
+        <p class="question-text">
+            {{ question }}
+        </p>
+
+        <div class="recording-section">
+            <button id="start-recording">🎙️ Start Recording</button>
+        </div>
+
+        <div class="text-answer-section">
+            <label for="text-answer">Or type your answer:</label>
+            <textarea id="text-answer" rows="5"></textarea>
+        </div>
+                   <!-- Buttons Section -->
+        <div class="button-group">
+            <button id="get-feedback">🧠 Get Feedback</button>
+            <button id="save-interview">💾 Save Interview</button>
+            <button id="go-home">🏠 Go Home</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/cultural.js') }}"></script>
+</body>
+</html>

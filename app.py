@@ -118,6 +118,12 @@ def technical():
     question = get_random_question("technical")
     return render_template("technical.html", question=question)
 
+@app.route('/cultural')
+def cultural():
+    question = get_random_question("cultural")
+    return render_template("cultural.html", question=question)
+
+
 if __name__ == '__main__':
     init_db()
     app.run(debug=True)
