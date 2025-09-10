@@ -53,3 +53,134 @@ ul li:hover {
     color: white;
     background-color: #123869;
 }
+/* AI Intro Container */
+.ai-intro {
+    position: relative;
+    height: 100vh;
+    background-color: #000814; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #00ffff;
+    font-family: 'Courier New', Courier, monospace;
+}
+#bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/static/img/hands.jpg') center center/cover no-repeat;
+    filter: blur(20px) brightness(0.5);
+    opacity: 0.3;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+    z-index: 0;
+}
+
+/* Text above background */
+.intro-text {
+    position: relative;
+    z-index: 2;
+    font-size: 1.5rem;
+    white-space: nowrap;
+    margin-bottom: 20px;
+}
+
+.intro-text::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+}
+
+/* Loading bar container */
+.loading-bar {
+    position: relative;
+    z-index: 2;
+    width: 60%;
+    height: 10px;
+    background-color: #082a3e;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px #00ffff55;
+}
+
+.loading-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(to right, #00ffff, #0077ff);
+    box-shadow: 0 0 15px #00ffff;
+    transition: width 0.3s ease;
+}
+
+/* Blink animation */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Main content */
+.container {
+    text-align: center;
+    padding: 60px 20px;
+    animation: fadeIn 1s ease-in-out;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Welcome message */
+.welcome-message {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+    color: #a5f3ff;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+}
+
+/* Question */
+.question {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #00ffff;
+    margin-bottom: 20px;
+}
+
+/* Interview Options */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+ul li {
+    background-color: #0077ff;
+    padding: 12px 24px;
+    border-radius: 6px;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    box-shadow: 0 0 10px #00bfff;
+}
+
+ul li:hover {
+    background-color: #005fc1;
+    box-shadow: 0 0 15px #00ffff;
+}

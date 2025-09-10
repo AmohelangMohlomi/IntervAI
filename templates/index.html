@@ -1,21 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Interview App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles-1.css') }}">
+    <meta charset="UTF-8" />
+    <title>IntervAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles-1.css') }}" />
 </head>
 <body>
-    <div class="container">
 
-        <h1>SOFTWARE ENGINEER INTERVIEW APP</h1>
-      
-        <img src="{{ url_for('static', filename='img/background.jpg') }}" alt="Interview" class="main-image" />
+    <div id="ai-intro" class="ai-intro">
+        <div id="bg-image"></div>
 
-        <p>Which interview would you like to do?</p>
+        <h2 class="intro-text" id="intro-text"></h2>
+
+        <div class="loading-bar">
+            <div class="loading-fill" id="loading-fill"></div>
+        </div>
+    </div>
+
+    <div class="container hidden" id="main-content">
+        <h1>IntervAI</h1>
+
+        <p class="welcome-message">Hi, I'm IntervAI. I heard you're a bit nervous about your interview — but don't worry, I'm here to help you ace it 💡</p>
+
+        <p class="question">Which interview would you like to do?</p>
         <ul>
             <li>Technical</li>
             <li>Cultural</li>
         </ul>
     </div>
+
+    <script src="{{ url_for('static', filename='js/ai-intro.js') }}"></script>
 </body>
 </html>
