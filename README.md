@@ -46,7 +46,7 @@ IntervAI is an interactive interview preparation app that helps users practice a
 ### Clone the repo:
 
 - git clone https://github.com/AmohelangMohlomi/IntervAI.git
-cd intervai 
+- cd intervai 
 
 
 ### Install dependencies:
@@ -58,8 +58,8 @@ cd intervai
 
 - Run the Flask app:
 
--- flask run
--- Open your browser and go to http://localhost:5000
+ flask run
+Open your browser and go to http://localhost:5000
 
 - Create an account or log in to start practicing interviews.
 
