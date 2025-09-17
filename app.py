@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, g, session, jsonify
+from dotenv import load_dotenv
+import os
 import sqlite3
 import random
 import requests
+
+load_dotenv() 
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' 
@@ -164,7 +168,7 @@ def get_feedback():
     context = build_prompt(question, answer)
 
     api_url = "https://api.shecodes.io/ai/v1/generate"
-    api_key = "46941f70d1a2ot4726aeabfb809e632b"
+    api_key = os.getenv("SHECODES_API_KEY")
 
     try:
         response = requests.get(api_url, params={
