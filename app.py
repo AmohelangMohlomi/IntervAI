@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, flash,g
+from flask import Flask, render_template, request, redirect, url_for, flash, g, session, jsonify
 import sqlite3
 import random
+import requests
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' 
@@ -82,6 +83,20 @@ def init_db():
                 password TEXT NOT NULL
             )
         ''')
+
+         # Create interviews table to store question, answer, feedback, timestamp
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS interviews (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL,
+                category TEXT NOT NULL,
+                question TEXT NOT NULL,
+                answer TEXT NOT NULL,
+                feedback TEXT NOT NULL,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+
         db.commit()
 
 # User lookup function
@@ -123,6 +138,76 @@ def cultural():
     question = get_random_question("cultural")
     return render_template("cultural.html", question=question)
 
+
+
+def build_prompt(question, answer):
+    context = f"""
+    You are an interview AI called IntervAI. The question comes from a local interview question database. 
+    After hearing the user's answer, you provide **detailed and constructive feedback** based on how well the answer fits a professional interview.
+    Question: {question}
+    User's Answer: {answer}
+    """
+    return context
+
+@app.route('/get_feedback', methods=['POST'])
+def get_feedback():
+    data = request.get_json()
+    question = data.get('question')
+    answer = data.get('answer')
+
+    if not question or not answer:
+        return jsonify({'error': 'Missing question or answer'}), 400
+
+    category = "cultural"  
+
+    prompt = f"Provide interview feedback for the answer to this question and give tips to answer the question better: {question}"
+    context = build_prompt(question, answer)
+
+    api_url = "https://api.shecodes.io/ai/v1/generate"
+    api_key = "46941f70d1a2ot4726aeabfb809e632b"
+
+    try:
+        response = requests.get(api_url, params={
+            'prompt': prompt,
+            'context': context,
+            'key': api_key
+        }, timeout=30)
+
+        if response.status_code == 200:
+            data = response.json()
+            feedback = data.get("answer", "No feedback received.")
+        else:
+            feedback = "Error getting feedback from AI. Please try again later."
+
+    except Exception as e:
+        feedback = f"An error occurred: {str(e)}"
+
+    username = session.get('username', 'anonymous')
+    save_interview(username, category, question, answer, feedback)
+
+    session['feedback_data'] = {
+        'question': question,
+        'answer': answer,
+        'feedback': feedback
+    }
+
+    return jsonify({'redirect_url': url_for('show_feedback')})
+
+@app.route('/show_feedback')
+def show_feedback():
+    feedback_data = session.get('feedback_data')
+    if not feedback_data:
+        flash("No feedback available.", "error")
+        return redirect(url_for('home'))
+    return render_template('feedback.html', **feedback_data)
+
+def save_interview(username, category, question, answer, feedback):
+    db = get_db()
+    db.execute('''
+        INSERT INTO interviews (username, category, question, answer, feedback)
+        VALUES (?, ?, ?, ?, ?)
+    ''', (username, category, question, answer, feedback))
+    db.commit()
 
 if __name__ == '__main__':
     init_db()
