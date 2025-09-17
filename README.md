@@ -45,23 +45,21 @@ IntervAI is an interactive interview preparation app that helps users practice a
 
 ### Clone the repo:
 
-- git clone https://github.com/yourusername/intervai.git
-cd intervai -
+- git clone https://github.com/AmohelangMohlomi/IntervAI.git
+cd intervai 
 
 
 ### Install dependencies:
 
-- pip install -r requirements.txt -
+- pip install -r requirements.txt 
 
 
 ### Set up your environment variables for SheCodes AI API and any secret keys (for example, Flask secret key for sessions).
 
 - Run the Flask app:
 
-flask run
-- 
-
-- Open your browser and go to http://localhost:5000
+-- flask run
+-- Open your browser and go to http://localhost:5000
 
 - Create an account or log in to start practicing interviews.
 
