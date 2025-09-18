@@ -1,5 +1,5 @@
 body{
-    background-color: cornflowerblue;
+    background: linear-gradient(135deg, #000000 0%, #001122 50%, #004080 80%, #001122 100%);
     background-size: cover;
     background-position: center;
     margin: 0;
