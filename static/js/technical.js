@@ -35,3 +35,6 @@ document.getElementById("get-feedback").addEventListener("click", async function
         alert("Something went wrong while getting feedback.");
     }
 });
+ document.getElementById("go-home").addEventListener("click", function () {
+        window.location.href = "/home";
+    });
