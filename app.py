@@ -21,6 +21,7 @@ def login():
 
         user = get_user(username)
         if user and user['password'] == password:  
+            session['username'] = username  
             flash('Logged in successfully!', 'success')
             return redirect(url_for('home'))
         else:
@@ -212,6 +213,25 @@ def save_interview(username, category, question, answer, feedback):
         VALUES (?, ?, ?, ?, ?)
     ''', (username, category, question, answer, feedback))
     db.commit()
+
+@app.route('/show_history')
+def show_history():
+    username = session.get('username')
+    if not username:
+        flash("You must be logged in to view your interview history.", "error")
+        return redirect(url_for('login'))
+
+    db = get_db()
+    cursor = db.execute('''
+        SELECT category, question, answer, feedback, timestamp
+        FROM interviews
+        WHERE username = ?
+        ORDER BY timestamp DESC
+    ''', (username,))
+    interviews = cursor.fetchall()
+
+    return render_template("show_history.html", interviews=interviews)
+
 
 if __name__ == '__main__':
     init_db()

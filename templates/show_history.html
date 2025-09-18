@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles-1.css') }}" />
+</head>
+<body>
+    <div class="container">
+    <h1>Your Interview History</h1>
+
+    {% if interviews %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Question</th>
+                    <th>Your Answer</th>
+                    <th>Feedback</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in interviews %}
+                    <tr>
+                        <td>{{ i.category }}</td>
+                        <td>{{ i.question }}</td>
+                        <td>{{ i.answer }}</td>
+                        <td>{{ i.feedback }}</td>
+                        <td>{{ i.timestamp }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No interview history available yet.</p>
+    {% endif %}
+
+    
+    <p><a href="{{ url_for('home') }}">Back to Home</a></p>
+
+    </div>
+</body>
+</html>

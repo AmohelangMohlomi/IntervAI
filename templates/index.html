@@ -23,11 +23,15 @@
         <p class="welcome-message">Hi, I'm IntervAI. I heard you're a bit nervous about your interview — but don't worry, I'm here to help you ace it 💡</p>
 
         <p class="question">Which interview would you like to do?</p>
-        <ul>
-           <li onclick="location.href='/technical'">Technical</li>
-           <li onclick="location.href='/cultural'">Cultural</li>
-        </ul>
+        <div class="button-container">
+            <ul>
+                <li onclick="location.href='/technical'">Technical</li>
+                <li onclick="location.href='/cultural'">Cultural</li>
+            </ul>
+            <a href="{{ url_for('show_history') }}" class="option-button">View Interview History</a>
+        </div>
     </div>
+  
 
     <script src="{{ url_for('static', filename='js/ai-intro.js') }}"></script>
 </body>
