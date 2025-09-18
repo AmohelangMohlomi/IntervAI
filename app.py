@@ -4,6 +4,7 @@ import os
 import sqlite3
 import random
 import requests
+import markdown
 
 load_dotenv() 
 
@@ -204,7 +205,19 @@ def show_feedback():
     if not feedback_data:
         flash("No feedback available.", "error")
         return redirect(url_for('home'))
-    return render_template('feedback.html', **feedback_data)
+    
+    
+    raw_feedback = feedback_data.get('feedback', '')
+    formatted_feedback = markdown.markdown(raw_feedback)
+
+    
+    return render_template(
+        'feedback.html',
+        question=feedback_data['question'],
+        answer=feedback_data['answer'],
+        feedback=formatted_feedback  
+    )
+  
 
 def save_interview(username, category, question, answer, feedback):
     db = get_db()
