@@ -1,2 +1,5 @@
 flask
 pyttsx3
+requests
+markdown
+python-dotenv
