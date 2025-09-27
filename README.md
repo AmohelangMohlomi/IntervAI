@@ -81,8 +81,8 @@ IntervAI is an interactive interview preparation app that helps users practice a
 
 ## Demo
 
-### You can try out a live demo of IntervAI here:
-IntervAI Demo Link ....
+### You can have a look of a live demo of IntervAI here:
+[IntervAI Demo Link ....](https://youtu.be/d9qay6OnMig)
 
 
 ## Future Improvements
