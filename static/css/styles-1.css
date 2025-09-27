@@ -40,7 +40,7 @@ body.question-active::before {
     max-width: 600px;
     background: rgba(0, 20, 40, 0.85); /* keep your dark translucent bg */
     border-radius: 15px;
-    box-shadow: 0 0 25px #00aaffcc;   /* neon glow */
+    box-shadow: 0 0 15px #00aaffcc;   /* neon glow */
     color: white;
     /* animation: fadeIn 1s ease-in-out; */
     margin: 40px auto; /* Fallback layout before intro ends */
@@ -64,7 +64,7 @@ body.question-active .container {
 h1 {
     margin-top: 20px;
     font-size: 3rem;
-    color: #0099bb; /* softer cyan */
+    color: white; /* softer cyan */
     text-shadow: 0 0 6px #0099bb, 0 0 14px #0099bb;
 }
 
@@ -74,7 +74,7 @@ p {
     margin: 20px 0;
     font-size: 1.4em;
     font-weight: 600;
-    color: #00aacc;
+    color: white;
     text-shadow: 0 0 6px #00aacc;
 }
 
@@ -250,7 +250,7 @@ ul li:hover {
 .feedback-body {
     text-align: left;
     margin-top: 15px;
-    background: rgba(0, 20, 40, 0.85);
+    background: linear-gradient(135deg, #000000 0%, #001122 50%, #004080 80%, #001122 100%);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 25px #00aaffcc;
@@ -258,3 +258,54 @@ ul li:hover {
     font-family: Arial, sans-serif; 
 }
 
+/* === History Table Styling === */
+
+.history-table-container {
+    overflow-x: auto;
+    margin-top: 30px;
+    background: rgba(0, 20, 40, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #00aaff55;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+    font-size: 0.95em;
+    table-layout: auto;
+}
+
+.history-table th,
+.history-table td {
+    border: 1px solid #00aacc55;
+    padding: 12px;
+    vertical-align: top;
+    text-align: left;
+}
+
+.history-table th {
+    background-color: #003344;
+    color: #00ddff;
+    font-weight: bold;
+    text-shadow: 0 0 6px #00aaccaa;
+}
+
+.history-table tr:nth-child(even) {
+    background-color: rgba(0, 40, 60, 0.4);
+}
+
+.history-table tr:hover {
+    background-color: rgba(0, 80, 120, 0.6);
+}
+
+.feedback-cell {
+    max-width: 400px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.container {
+    max-width: 1000px;
+}
