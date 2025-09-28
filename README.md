@@ -2,6 +2,13 @@
 
 IntervAI is an interactive interview preparation app that helps users practice answering common interview questions. It fetches questions from a SQLite database (questions.db), then displays them one by one. Users can respond via voice input or text input, and the app provides real-time feedback and tips to help improve their answers.
 
+## Demo
+
+### You can have a look of a live demo of IntervAI here:
+[![Watch the video](https://img.youtube.com/vi/d9qay6OnMig/0.jpg)](https://www.youtube.com/watch?v=d9qay6OnMig)
+
+
+
 ### Note: Users must log in to use the app so that their interview progress and responses can be saved securely.
 
 ## Features
@@ -78,12 +85,6 @@ IntervAI is an interactive interview preparation app that helps users practice a
 6. Feedback and tips are provided to the user.
 
 7. User responses and progress are saved in the database tied to their account.
-
-## Demo
-
-### You can have a look of a live demo of IntervAI here:
-[![Watch the video](https://img.youtube.com/vi/d9qay6OnMig/0.jpg)](https://www.youtube.com/watch?v=d9qay6OnMig)
-
 
 
 ## Future Improvements
