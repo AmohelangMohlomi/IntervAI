@@ -50,8 +50,8 @@ def signup():
             flash('Password must be at least 8 characters.', 'error')
             return render_template('signup.html')
 
-        # Try to add user to DB
-        success = add_user(username, password)  # You might want to hash the password here!
+        
+        success = add_user(username, password) 
 
         if success:
             flash('Account created successfully! Please login.', 'success')
@@ -90,7 +90,6 @@ def init_db():
             )
         ''')
 
-         # Create interviews table to store question, answer, feedback, timestamp
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS interviews (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
