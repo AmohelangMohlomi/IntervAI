@@ -5,6 +5,10 @@ import sqlite3
 import random
 import requests
 import markdown
+import threading
+import datetime
+import speech_recognition as sr
+import uuid 
 
 load_dotenv() 
 
@@ -12,6 +16,17 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key' 
 
 DATABASE = 'users.db' 
+
+AUDIO_FOLDER = "audio"
+ACTIVATION_KEYWORD = "computer"
+SILENCE_THRESHOLD = 5  # seconds of silence to stop
+
+recognizer = sr.Recognizer()
+mic = sr.Microphone()
+audio_transcriptions = {}
+
+# Make sure the audio folder exists
+os.makedirs(AUDIO_FOLDER, exist_ok=True)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -243,6 +258,87 @@ def show_history():
     interviews = cursor.fetchall()
 
     return render_template("show_history.html", interviews=interviews)
+
+
+def record_until_silent(silence_limit=SILENCE_THRESHOLD):
+    print("Recording... (stay quiet to stop)")
+    full_audio = sr.AudioData(b"", 16000, 2)
+
+    with sr.Microphone() as source:
+        recognizer.adjust_for_ambient_noise(source)
+
+        while True:
+            try:
+                audio = recognizer.listen(
+                    source,
+                    timeout=silence_limit,
+                    phrase_time_limit=None
+                )
+                full_audio = sr.AudioData(
+                    full_audio.get_raw_data() + audio.get_raw_data(),
+                    audio.sample_rate,
+                    audio.sample_width
+                )
+                print("...still hearing you")
+            except sr.WaitTimeoutError:
+                print("Silence detected. Stopping recording.")
+                break
+
+    filename = datetime.datetime.now().strftime(f"{AUDIO_FOLDER}/recording_%Y%m%d_%H%M%S.wav")
+    with open(filename, "wb") as f:
+        f.write(full_audio.get_wav_data())
+    print("Saved recording to:", filename)
+
+
+
+@app.route('/start_recording', methods=['POST'])
+def start_recording():
+    recording_id = str(uuid.uuid4())  # Generate unique ID for this session
+
+    def record_and_transcribe(recording_id):
+        print("Recording started without keyword...")
+
+        with sr.Microphone() as source:
+            recognizer.adjust_for_ambient_noise(source)
+
+            try:
+                audio = recognizer.listen(source, timeout=SILENCE_THRESHOLD)
+                text = recognizer.recognize_google(audio)
+                print(f"Transcribed Text: {text}")
+
+                # Save audio if needed
+                filename = datetime.datetime.now().strftime(f"{AUDIO_FOLDER}/recording_%Y%m%d_%H%M%S.wav")
+                with open(filename, "wb") as f:
+                    f.write(audio.get_wav_data())
+
+                # ✅ Save to global dict instead of session
+                audio_transcriptions[recording_id] = text
+
+            except sr.WaitTimeoutError:
+                print("No speech detected.")
+                audio_transcriptions[recording_id] = ""
+            except Exception as e:
+                print("Error:", e)
+                audio_transcriptions[recording_id] = ""
+
+    # Start background thread
+    threading.Thread(target=record_and_transcribe, args=(recording_id,)).start()
+
+    return jsonify({"status": "Recording started", "recording_id": recording_id})
+
+@app.route('/get_transcription')
+def get_transcription():
+    recording_id = request.args.get("recording_id")
+
+    if not recording_id:
+        return jsonify({'error': 'Missing recording_id'}), 400
+
+    transcription = audio_transcriptions.get(recording_id, None)
+
+    if transcription is None:
+        return jsonify({'status': 'pending'})  
+    else:
+        return jsonify({'transcription': transcription})
 
 
 if __name__ == '__main__':
