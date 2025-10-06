@@ -18,7 +18,6 @@ app.secret_key = 'your_secret_key'
 DATABASE = 'users.db' 
 
 AUDIO_FOLDER = "audio"
-ACTIVATION_KEYWORD = "computer"
 SILENCE_THRESHOLD = 5  # seconds of silence to stop
 
 recognizer = sr.Recognizer()
